@@ -17,7 +17,7 @@ w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 load_dotenv()
 
 ############################################################################################################################################################################
-#Load Contract
+# Load Contract
 ############################################################################################################################################################################
 
 def load_contract():
@@ -37,8 +37,11 @@ def load_contract():
 
 contract = load_contract()
 
-def pin_chart(hospital_input, docname_input, patname_input,
-                date_input, age_input, height_input, weight_input, bp_input, e_notes, med_notes, med_his_notes):
+############################################################################################################################################################################
+# Helper functions to pin files and json to Pinata
+############################################################################################################################################################################
+
+def pin_chart(hospital_input, docname_input, pat_address, record_date, age_input, height_input, weight_input, med_his_notes, exam_notes):
 
     # Build a token metadata file for the artwork
     token_json = {
@@ -52,11 +55,11 @@ def pin_chart(hospital_input, docname_input, patname_input,
 
     return json_ipfs_hash
 
-############################################################################################################################################################################
-# Helper functions to pin files and json to Pinata
-############################################################################################################################################################################
+#Set Theme
 
 over_theme = {'txc_inactive': '#0000FF'}
+
+# Established Patient/Doctor Profiles for Example
 
 patient_1_address = "0x10dfC6C4b40Ff39882E8A107E432305E39dE55d4"
 patient_2_address = "0x5e1a5E41F914C1B1498cDFE03E25D23A34239652"
@@ -65,6 +68,8 @@ doctor_2_address = "0x1ceA88Ab386170eB43Ecbd4e8b983C5433cAAb25"
 
 d_accounts = [doctor_1_address, doctor_2_address]
 p_accounts = [patient_1_address, patient_2_address]
+
+# Creating Webpage
 
 app = hy.HydraApp(
         title='BlocDoc',
@@ -79,7 +84,7 @@ app = hy.HydraApp(
 @app.addapp(is_home=True)
     def Home():
         hy.info('About BlocDoc')
-        st.write("BlocDoc is an Electronic Health Record Decentralized Application (EHR-dApp), a web application that helps patients and doctors manage electronic health records in a decentralized way. We are trying to apply the EHR systems logic to Blockchain architecture, of course, on a proof of concept level.")
+        st.write("BlocDoc is an Electronic Health Record Decentralized Application (EHR-dApp), an etherium-based web application that helps patients and doctors manage electronic health records in a decentralized format. We are trying to apply the EHR systems logic to Blockchain architecture, of course, on a proof of concept level.")
         st.write("Choose an account to get started")
         accounts = w3.eth.accounts
         address = st.selectbox("Select Account", options=accounts)
@@ -93,20 +98,17 @@ app = hy.HydraApp(
             with st.form('form1'):
                 hospital_input = st.text_input(label='Hospital Name')
                 docname_input = st.text_input(label='Doctor Name')
-                patname_input = st.text_input(label='Patient Name')
+                pat_address = patient_1_address
                 record_date = datetime.now().isoformat()
                 age_input = st.number_input(label='Age')
                 height_input = st.number_input(label='Height in Inches')
                 weight_input = st.number_input(label='Weight')
-                bp_input = st.number_input(label='Blood Pressure (mm Hg)')
-                e_notes = st.text_input(label='Examination Notes')
-                med_notes = st.text_input(label='Current Medication/Treatment')
                 med_his_notes = st.text_input(label='Notes of Patient Medical History')
+                exam_notes = st.text_input(label='Examination Notes')
                 dsubmit_button = st.form_submit_button(label='Submit')
 
             if st.form_submit_button("Create New Patient Chart"):
-                chart_ipfs_hash = pin_chart(hospital_input, docname_input, patname_input,
-                date_input, age_input, height_input, weight_input, bp_input, e_notes, med_notes, med_his_notes)
+                chart_ipfs_hash = pin_chart(hospital_input, docname_input, pat_address, record_date, age_input, height_input, weight_input, med_his_notes, exam_notes)
 
                 chart_uri = f"ipfs://{chart_ipfs_hash}"
 
