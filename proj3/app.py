@@ -107,21 +107,21 @@ def Doctor():
             exam_notes = st.text_input(label='Examination Notes')
             dsubmit_button = st.form_submit_button(label='Submit')
 
-        if st.form_submit_button("Create New Patient Chart"):
-            chart_ipfs_hash = pin_chart(hospital_input, docname_input, pat_address, record_date, age_input, height_input, weight_input, med_his_notes, exam_notes)
+            if st.form_submit_button("Create New Patient Chart"):
+                chart_ipfs_hash = pin_chart(hospital_input, docname_input, pat_address, record_date, age_input, height_input, weight_input, med_his_notes, exam_notes)
 
-            chart_uri = f"ipfs://{chart_ipfs_hash}"
+                chart_uri = f"ipfs://{chart_ipfs_hash}"
 
-            tx_hash = contract.functions.registerChart(
-                patient_1_address,
-                chart_uri
-            ).transact({'from':doctor_1_address, 'gas':1000000})
-            receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-            st.write("Transaction Receipt Mined:")
-            st.write(dict(receipt))
-            st.write("You can view the pinned metadata file with the following IPFS Gateway Link")
-            st.markdown(f"[Chart IPFS Gateway Link](https://ipfs.io/ipfs/{chart_ipfs_hash})")
-        st.markdown("---")
+                tx_hash = contract.functions.registerChart(
+                    patient_1_address,
+                    chart_uri
+                ).transact({'from':doctor_1_address, 'gas':1000000})
+                receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+                st.write("Transaction Receipt Mined:")
+                st.write(dict(receipt))
+                st.write("You can view the pinned metadata file with the following IPFS Gateway Link")
+                st.markdown(f"[Chart IPFS Gateway Link](https://ipfs.io/ipfs/{chart_ipfs_hash})")
+         st.markdown("---")
 
 @app.addapp()
 def Patient():

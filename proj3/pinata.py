@@ -2,7 +2,9 @@ import os
 import json
 import requests
 from dotenv import load_dotenv
-load_dotenv()
+from pinata import *
+
+load_dotenv("web3.env")
 
 json_headers = {
     "Content-Type": "application/json",
