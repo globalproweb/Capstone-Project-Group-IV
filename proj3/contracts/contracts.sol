@@ -13,7 +13,14 @@ contract MedicalRecord is ERC721Full {
         uint256 RecordDate;
     }
     mapping(uint256 => PatientRecord) public MedicalDataBank;
-    event SavePatientRecord(uint256 tokenId, uint256 RecordDate, string reportURI);
+    event SavePatientRecord(uint256 tokenId, string HospitalName,
+        string DoctorName,
+        uint Age,
+        uint Height,
+        uint Weight,
+        string MedicalHistory,
+        string MedicalExam,  uint256 RecordDate);
+   
     function setPatientRecord(
         address Patient,
         string memory HospitalName,
@@ -30,15 +37,7 @@ contract MedicalRecord is ERC721Full {
         _mint(Patient, tokenId);
         _setTokenURI(tokenId, tokenURI);
         MedicalDataBank[tokenId] = PatientRecord(HospitalName, DoctorName, Age, Height, Weight, MedicalHistory, MedicalExam, initialRecordDate);
+        emit SavePatientRecord(tokenId, HospitalName, DoctorName, Age, Height, Weight, MedicalHistory, MedicalExam, initialRecordDate);
         return tokenId;
-    }
-    function newPatientRecord(
-        uint256 tokenId,
-        uint256 newRecordDate,
-        string memory reportURI
-    ) public returns (uint256) {
-        MedicalDataBank[tokenId].RecordDate = newRecordDate;
-        emit SavePatientRecord(tokenId, newRecordDate, reportURI);
-        return MedicalDataBank[tokenId].RecordDate;
     }
 }
