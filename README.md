@@ -1,6 +1,11 @@
 # Capstone-Project-Group-IV
 
-![alt=""](images/ScreenshotHead.png)
+<img src="./images/ScreenshotHead.png" />
+
+#
+
+
+
 # Overview
 
 The medical field is one of the largest industries in the world. However, innovation is very limited due to regulations. We decided to target this field due to potential benefits between patients and doctors sharing medical records and protecting patients privacy. We will show how Blockchain can revolutionize the Medical Records Industry.
@@ -14,7 +19,8 @@ Build a decentralized App “ Medical Record System”  using Streamlit and smar
 #
 # Techical requirements 
 
-![alt=""](images/Technical.png)
+<img src="./images/Technical.png">
+
 #
 
 # Process 
@@ -25,14 +31,14 @@ Build a decentralized App “ Medical Record System”  using Streamlit and smar
 * Data/Creating Medical Charts
 
 
-![alt=""](images/Step1.png)
+<img src="./images/Step1.png">
 
 #
 
 # The Front end
 
 
-![alt=""](images/Step2.png)
+<img src="./images/Step2.png">
 
 # 
 
